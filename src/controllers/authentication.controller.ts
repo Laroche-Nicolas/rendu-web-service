@@ -1,9 +1,10 @@
-import { Body, Controller, Put } from '@nestjs/common';
+import { Body, Controller, Post, Put } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from '../services/authentication.service';
 // import { LoginDTO } from '../dto/login.dto';
 import { UserDto } from '../dto/user.dto';
 import { User } from '../models/user.model';
+import { LoginDTO } from '../dto/login.dto';
 
 @Controller('auth')
 @ApiTags('Authentication')
@@ -17,5 +18,14 @@ export class AuthenticationController {
   })
   registerUser(@Body() parameters: UserDto): Promise<User> {
     return this.authenticationService.registerUser(parameters);
+  }
+
+  @Post('login')
+  @ApiOperation({
+    summary: 'Route for login an User',
+    description: 'Route to login an user and get a JWT token.',
+  })
+  loginUser(@Body() parameters: LoginDTO): Promise<{ token: string }> {
+    return this.authenticationService.login(parameters);
   }
 }
