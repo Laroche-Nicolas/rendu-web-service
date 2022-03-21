@@ -8,7 +8,7 @@ export class User {
   _id: Types.ObjectId;
 
   @Prop({ required: true, unique: true })
-  mail: string;
+  email: string;
 
   @Prop({ select: false })
   password: string;
