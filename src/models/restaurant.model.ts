@@ -14,16 +14,16 @@ export class Restaurant {
   address: string;
 
   @Prop({ required: true })
-  zipcode: number;
+  zipcode: string;
 
   @Prop()
-  phonenumber: string;
+  phoneNumber: string;
 
   @Prop({ required: true })
   foodType: string;
 
   @Prop()
-  averagepirce: number;
+  averagePrice: string;
 
   @Prop({ select: false })
   __v: number;
