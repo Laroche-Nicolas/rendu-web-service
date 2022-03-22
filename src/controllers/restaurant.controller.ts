@@ -7,6 +7,7 @@ import {
   UseGuards,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { ApiOperation, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { RestaurantService } from '../services/restaurant.service';
@@ -20,17 +21,6 @@ import { RestaurantDto } from '../dto/restaurant.dto';
 export class RestaurantController {
   constructor(private readonly restaurantService: RestaurantService) {}
 
-  @Post('add')
-  @UseGuards(JWTGuard)
-  @ApiSecurity('Bearer')
-  @ApiOperation({
-    summary: 'Route for adding an restaurant',
-    description: 'Route to register an user and return the user.',
-  })
-  createRestaurant(@Body() parameters: addRestaurantDto): Promise<Restaurant> {
-    return this.restaurantService.addRestaurant(parameters);
-  }
-
   @Get()
   @UseGuards(JWTGuard)
   @ApiSecurity('Bearer')
@@ -40,6 +30,20 @@ export class RestaurantController {
   })
   getAllRestaurant(): Promise<Restaurant[]> {
     return this.restaurantService.getAllRestaurants();
+  }
+
+  @Post()
+  @UseGuards(JWTGuard)
+  @ApiSecurity('Bearer')
+  @ApiOperation({
+    summary: 'Route for adding an restaurant',
+    description: 'Route to register an user and return the user.',
+  })
+  createRestaurant(
+    @Body() parameters: addRestaurantDto,
+    @Req() req: any,
+  ): Promise<Restaurant> {
+    return this.restaurantService.addRestaurant(parameters, req.user._id);
   }
 
   @Get(':restaurantId')
@@ -55,17 +59,6 @@ export class RestaurantController {
     return this.restaurantService.getRestaurantByID(restaurantId);
   }
 
-  @Delete(':restaurantId')
-  @UseGuards(JWTGuard)
-  @ApiSecurity('Bearer')
-  @ApiOperation({
-    summary: 'Route to delete a restaurant',
-    description: 'Route for delete a restaurant depending on his id.',
-  })
-  deleteRestaurantById(@Param('restaurantId') restaurantId: string) {
-    return this.restaurantService.deleteRestaurantById(restaurantId);
-  }
-
   @Put(':restaurantId')
   @UseGuards(JWTGuard)
   @ApiSecurity('Bearer')
@@ -77,7 +70,29 @@ export class RestaurantController {
   updateRestaurantById(
     @Body() body: RestaurantDto,
     @Param('restaurantId') restaurantId: string,
+    @Req() req: any,
   ) {
-    return this.restaurantService.updateRestaurantById(restaurantId, body);
+    return this.restaurantService.updateRestaurantById(
+      restaurantId,
+      body,
+      req.user._id,
+    );
+  }
+
+  @Delete(':restaurantId')
+  @UseGuards(JWTGuard)
+  @ApiSecurity('Bearer')
+  @ApiOperation({
+    summary: 'Route to delete a restaurant',
+    description: 'Route for delete a restaurant depending on his id.',
+  })
+  deleteRestaurantById(
+    @Param('restaurantId') restaurantId: string,
+    @Req() req: any,
+  ) {
+    return this.restaurantService.deleteRestaurantById(
+      restaurantId,
+      req.user._id,
+    );
   }
 }
