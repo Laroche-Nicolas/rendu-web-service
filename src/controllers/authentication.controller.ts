@@ -2,7 +2,7 @@ import { Body, Controller, Post, Put } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from '../services/authentication.service';
 // import { LoginDTO } from '../dto/login.dto';
-import { UserDto } from '../dto/user.dto';
+import { RegisterUserDto } from '../dto/register-user.dto';
 import { User } from '../models/user.model';
 import { LoginDTO } from '../dto/login.dto';
 
@@ -16,7 +16,7 @@ export class AuthenticationController {
     summary: 'Route for register an User',
     description: 'Route to register an user and return the user.',
   })
-  registerUser(@Body() parameters: UserDto): Promise<User> {
+  registerUser(@Body() parameters: RegisterUserDto): Promise<User> {
     return this.authenticationService.registerUser(parameters);
   }
 
