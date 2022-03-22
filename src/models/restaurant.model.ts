@@ -25,6 +25,9 @@ export class Restaurant {
   @Prop()
   averagePrice: string;
 
+  @Prop()
+  userId: string;
+
   @Prop({ select: false })
   __v: number;
 }
