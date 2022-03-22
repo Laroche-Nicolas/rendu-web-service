@@ -1,10 +1,18 @@
-import { Body, Controller, Post, Put } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiOperation, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from '../services/authentication.service';
-// import { LoginDTO } from '../dto/login.dto';
 import { RegisterUserDto } from '../dto/register-user.dto';
 import { User } from '../models/user.model';
 import { LoginDTO } from '../dto/login.dto';
+import { JWTGuard } from '../guards/jwt.guard';
 
 @Controller('auth')
 @ApiTags('Authentication')
@@ -22,10 +30,21 @@ export class AuthenticationController {
 
   @Post('login')
   @ApiOperation({
-    summary: 'Route for login an User',
+    summary: 'Route to login an User',
     description: 'Route to login an user and get a JWT token.',
   })
   loginUser(@Body() parameters: LoginDTO): Promise<{ token: string }> {
     return this.authenticationService.login(parameters);
+  }
+
+  @Get('me')
+  @UseGuards(JWTGuard)
+  @ApiSecurity('Bearer')
+  @ApiOperation({
+    summary: 'Route to get information about the current user',
+    description: 'Route to get information about the current user.',
+  })
+  getMe(@Req() req: any) {
+    return req.user;
   }
 }
