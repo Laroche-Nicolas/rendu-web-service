@@ -47,7 +47,7 @@ export class ReviewService {
     body: updateReviewDto,
     userId: string,
   ): Promise<Review> => {
-    const review = await this.reviewRepository.findOneById(reviewId);
+    const review = await this.getReviewById(reviewId);
 
     if (review.authorId !== userId.toString()) {
       throw new UnauthorizedException();
@@ -55,7 +55,7 @@ export class ReviewService {
     // @ts-ignore
     await this.reviewRepository.updateOneBy({ _id: reviewId }, { ...body });
 
-    return await this.reviewRepository.findOneById(reviewId);
+    return await this.getReviewById(reviewId);
   };
 
   deleteRestaurantById = async (reviewId: string, userId: string) => {
