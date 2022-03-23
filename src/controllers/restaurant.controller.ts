@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { RestaurantService } from '../services/restaurant.service';
-import { addRestaurantDto } from '../dto/add-restaurant.dto';
 import { Restaurant } from '../models/restaurant.model';
 import { JWTGuard } from '../guards/jwt.guard';
 import { RestaurantDto } from '../dto/restaurant.dto';
@@ -40,7 +39,7 @@ export class RestaurantController {
     description: 'Route to register an user and return the user.',
   })
   createRestaurant(
-    @Body() parameters: addRestaurantDto,
+    @Body() parameters: RestaurantDto,
     @Req() req: any,
   ): Promise<Restaurant> {
     return this.restaurantService.addRestaurant(parameters, req.user._id);
@@ -71,7 +70,7 @@ export class RestaurantController {
     @Body() body: RestaurantDto,
     @Param('restaurantId') restaurantId: string,
     @Req() req: any,
-  ) {
+  ): Promise<Restaurant> {
     return this.restaurantService.updateRestaurantById(
       restaurantId,
       body,
