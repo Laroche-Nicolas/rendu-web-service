@@ -7,7 +7,7 @@ import { User } from '../models/user.model';
 import * as bCrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UserRepository } from '../repositories/user.repository';
-import { UserDto } from '../dto/user.dto';
+import { RegisterUserDto } from '../dto/register-user.dto';
 import config from '../config';
 import { LoginDTO } from '../dto/login.dto';
 
@@ -15,7 +15,7 @@ import { LoginDTO } from '../dto/login.dto';
 export class AuthenticationService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  registerUser = async (parameters: UserDto): Promise<User> => {
+  registerUser = async (parameters: RegisterUserDto): Promise<User> => {
     const { email, password, firstname, lastname } = parameters;
     const existingUser = await this.findUserByMail(email);
 
