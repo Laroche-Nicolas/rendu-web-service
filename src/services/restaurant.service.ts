@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { Restaurant } from '../models/restaurant.model';
 import { RestaurantRepository } from '../repositories/restaurant.repository';
-import { addRestaurantDto } from '../dto/add-restaurant.dto';
 import { RestaurantDto } from '../dto/restaurant.dto';
 
 @Injectable()
@@ -13,16 +12,11 @@ export class RestaurantService {
   constructor(private readonly restaurantRepository: RestaurantRepository) {}
 
   addRestaurant = async (
-    parameters: addRestaurantDto,
+    parameters: RestaurantDto,
     userId: string,
   ): Promise<Restaurant> => {
-    const { name, foodType, address, zipcode } = parameters;
-
     const restaurant = await this.restaurantRepository.insert({
-      name,
-      foodType,
-      address,
-      zipcode,
+      ...parameters,
       userId,
     });
 
@@ -41,7 +35,7 @@ export class RestaurantService {
     restaurantId: string,
     parameters: RestaurantDto,
     userId: string,
-  ) => {
+  ): Promise<Restaurant> => {
     const restaurant = await this.getRestaurantByID(restaurantId);
     if (restaurant.userId !== userId.toString()) {
       throw new UnauthorizedException();
@@ -50,6 +44,7 @@ export class RestaurantService {
       { _id: restaurantId },
       { ...parameters },
     );
+    return await this.getRestaurantByID(restaurantId);
   };
 
   deleteRestaurantById = async (restaurantId: string, userId: string) => {
