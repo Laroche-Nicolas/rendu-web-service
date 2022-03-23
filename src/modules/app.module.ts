@@ -6,12 +6,24 @@ import { AuthenticationController } from '../controllers/authentication.controll
 import { AuthenticationService } from '../services/authentication.service';
 import { RestaurantController } from '../controllers/restaurant.controller';
 import { RestaurantService } from '../services/restaurant.service';
+import { ReviewService } from '../services/review.service';
+import { ReviewController } from '../controllers/review.controller';
 import config from '../config';
 import { MongoModule } from './mongo.module';
 
 @Module({
   imports: [MongooseModule.forRoot(config.mongoUrl), MongoModule],
-  controllers: [AppController, AuthenticationController, RestaurantController],
-  providers: [AppService, AuthenticationService, RestaurantService],
+  controllers: [
+    AppController,
+    AuthenticationController,
+    RestaurantController,
+    ReviewController,
+  ],
+  providers: [
+    AppService,
+    AuthenticationService,
+    RestaurantService,
+    ReviewService,
+  ],
 })
 export class AppModule {}
