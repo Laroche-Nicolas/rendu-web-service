@@ -24,8 +24,9 @@ export class ReviewController {
   @UseGuards(JWTGuard)
   @ApiSecurity('Bearer')
   @ApiOperation({
-    summary: 'Route for get all restaurants',
-    description: 'Route for get all restaurants.',
+    summary: 'Route for get all reviews from the current user',
+    description:
+      'Route for get all reviews from the current user, and return an Array of Review.',
   })
   getAllReviewFromAUser(@Req() req: any): Promise<Review[]> {
     return this.reviewService.getAllReviewFromAUser(req.user._id);
@@ -35,8 +36,9 @@ export class ReviewController {
   @UseGuards(JWTGuard)
   @ApiSecurity('Bearer')
   @ApiOperation({
-    summary: 'Route for get all restaurants',
-    description: 'Route for get all restaurants.',
+    summary: 'Route for get all the reviews from a restaurant',
+    description:
+      'Route for get all the reviews from a restaurant and return an Array of Review.',
   })
   getAllReviewFromARestaurant(
     @Param('restaurantId') restaurantId: string,
@@ -48,8 +50,8 @@ export class ReviewController {
   @UseGuards(JWTGuard)
   @ApiSecurity('Bearer')
   @ApiOperation({
-    summary: 'Route for get a restaurant',
-    description: 'Route for get a restaurant depending on his id.',
+    summary: 'Route for get a review',
+    description: 'Route for get a review informations depending on his id.',
   })
   getARestaurantByID(@Param('reviewId') reviewId: string): Promise<Review> {
     return this.reviewService.getReviewById(reviewId);
@@ -59,8 +61,8 @@ export class ReviewController {
   @UseGuards(JWTGuard)
   @ApiSecurity('Bearer')
   @ApiOperation({
-    summary: 'Route for adding an restaurant',
-    description: 'Route to register an user and return the user.',
+    summary: 'Route for adding a review',
+    description: 'Route to register a review and return the review.',
   })
   createReview(
     @Body() parameters: reviewDto,
@@ -73,9 +75,9 @@ export class ReviewController {
   @UseGuards(JWTGuard)
   @ApiSecurity('Bearer')
   @ApiOperation({
-    summary: 'Route to update a restaurant',
+    summary: 'Route to update a review',
     description:
-      'Route for update all the fields of a restaurant depending on his id.',
+      'Route for update all the fields of a review depending on his id.',
   })
   updateReviewById(
     @Param('reviewId') reviewId: string,
@@ -89,8 +91,8 @@ export class ReviewController {
   @UseGuards(JWTGuard)
   @ApiSecurity('Bearer')
   @ApiOperation({
-    summary: 'Route to delete a restaurant',
-    description: 'Route for delete a restaurant depending on his id.',
+    summary: 'Route to delete a review',
+    description: 'Route for delete a review depending on his id.',
   })
   deleteRestaurantById(@Param('reviewId') reviewId: string, @Req() req: any) {
     return this.reviewService.deleteRestaurantById(reviewId, req.user._id);
