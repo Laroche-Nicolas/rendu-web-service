@@ -45,18 +45,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Documentation
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
+The documentation of the API is available on route `/docs/#/` (for a local running : `localhost:3000/docs/#/`)
 
 ## Support
 

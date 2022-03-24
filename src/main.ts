@@ -8,9 +8,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Mi Documentation')
-    .setDescription('')
-    .setVersion('1.0')
+    .setTitle('API Documentation')
+    .setDescription('Welcome on the API Documentation for WebService module.')
+    .setVersion('0.1')
     .addSecurity('Bearer', {
       type: 'http',
       scheme: 'bearer',
