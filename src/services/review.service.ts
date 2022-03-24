@@ -16,11 +16,12 @@ export class ReviewService {
     parameters: reviewDto,
     userId: string,
   ): Promise<Review> => {
-    const { dateVisit, rating, restaurantId } = parameters;
+    const { dateVisit, rating, restaurantId, description } = parameters;
 
     const review = await this.reviewRepository.insert({
       dateVisit,
       rating,
+      description,
       restaurantId,
       authorId: userId,
     });
